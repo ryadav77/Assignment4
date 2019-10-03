@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <style>
+          button{
+              background-color: black;
+              color: white;
+          }
+      </style>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Invoice</title>
+  </head>
+  <body style="background-color: lightslategrey">
+    <hr>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+    
+    
+            
+                <div style="background-color: white" class="modal-body">
+                    <p style="text-align: center">Invoice</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button" data-dismiss="modal">Close</button>
+                </div>
+            
+    
+        </div>
+    </div>
+    <h3 style="text-align: center; background-color: black;color: white">Stock Manager</h3>
+    <hr>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div  style="background-color: lightgray" class="col-md-3">
+            <p id="idd1">ID:</p>
+                    <form>
+                            <div class="form-group">
+                              <label>Code</label>
+                              <input type="text" class="form-control" id="code" >
+                             </div>
+                            <div class="form-group">
+                              <label>Quantity</label>
+                              <input type="number" class="form-control" id="qty">
+                            </div>
+                            <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="number" class="form-control" id="price">
+                            </div>
+                            <hr>
+                          <button type="button" class="button" id="add">Add Item</button>
+                          </form>
+                          <hr>
+                          <p id="tcost1">Total Cost</p>
+                          <br>
+                          <button type="button" class="button" id="invoice" data-toggle="modal" data-target="#myModal">Invoice</button>
+                          <button type="button" class="button" id="print">Print</button>
+
+            </div>
+            <div class="col-md-9">
+                <table class="table table-dark" id="tb1">
+                    <tbody>
+                        <tr>
+                        <td><b>ID</b></td>
+                        <td><b>Code</b></td>
+                        <td><b>Qunatity</b></td>
+                        <td><b>Price</b></td>
+                        <td><b>Total Price</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        console.log("check1");
+        var idd=0;
+        var tcost=0;
+        tArray=[];
+        function tdata(id,code,qty,price){
+            this.id=idd;
+            this.code=code;
+            this.qty=qty;
+            this.price=price;
+        }
+        $("#add").on("click",function(){
+            var tdataa= new tdata(idd,$("#code").val(),$("#qty").val(),$("#price").val());
+            idd=idd+1;
+            document.getElementById("idd1").innerHTML= "ID:"+idd;
+            tcost= tcost+((tdataa.qty)*(tdataa.price));
+            document.getElementById("tcost1").innerHTML= "Total Cost : "+ tcost;
+            addrow(tdataa);
+        });
+        function addrow(obj){
+            var item = $.parseJSON(JSON.stringify(obj));
+            var tr="";
+            tr+="<tr>";
+            tr+="<td>"+idd+"</td>";
+            tr+="<td>"+item.code+"</td>";
+            tr+="<td>"+item.qty+"</td>";
+            tr+="<td>"+item.price+"</td>";
+            tr+="<td>"+(item.qty*item.price)+"</td>";
+            tr+="<tr>";
+            $("#tb1>tbody").append(tr);
+            clear();
+
+
+
+
+        }
+        function clear(){
+            $("#code").val("");
+            $("#qty").val("");
+            $("#price").val("");
+        }
+    </script>
+    
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
